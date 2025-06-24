@@ -1,6 +1,6 @@
 {
-  "name": "proxyguard",
-  "module": "index.js",
+  "name": "superintendent",
+  "module": "index.ts",
   "type": "module",
   "scripts": {
     "start": "bun src/index.ts",

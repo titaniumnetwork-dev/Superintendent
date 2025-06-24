@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { MessageFlags, SlashCommandBuilder } from "discord.js";
 import { db } from "../db/db.ts";
 import type { Command } from "./index.ts";
 
@@ -9,11 +9,11 @@ export default {
 	async execute(interaction) {
 		const list =
 			db.allowed_roles.map((r) => `<@&${r}>`).join("\n") ||
-			"*No roles configured*";
+			"**No roles configured**";
 
 		return interaction.reply({
 			content: `Allowed roles:\n${list}`,
-			ephemeral: true,
+			flags: [MessageFlags.Ephemeral]
 		});
 	},
 } as Command;

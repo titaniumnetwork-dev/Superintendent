@@ -1,6 +1,6 @@
 import { db } from "../db/db.ts";
 import type { Command } from "./index.ts";
-import { GuildMemberRoleManager, SlashCommandBuilder } from "discord.js";
+import { GuildMemberRoleManager, MessageFlags, SlashCommandBuilder } from "discord.js";
 
 export default {
 	data: new SlashCommandBuilder()
@@ -24,12 +24,13 @@ export default {
 		if (!db.allowed_roles.includes(role.id)) {
 			return interaction.reply({
 				content: "Role not allowed.",
+				flags: [MessageFlags.Ephemeral]
 			});
 		}
 		await (member.roles as GuildMemberRoleManager).remove(role.id);
 
 		return interaction.reply({
-			content: `Granted <@&${role.id}> to <@!${user.id}>`,
+			content: `Removed <@&${role.id}> from <@!${user.id}>.`,
 		});
 	},
 } as Command;
