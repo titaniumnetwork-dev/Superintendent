@@ -4,12 +4,12 @@ import { GuildMemberRoleManager, MessageFlags, SlashCommandBuilder } from "disco
 
 export default {
 	data: new SlashCommandBuilder()
-		.setName("ungrant")
-		.setDescription("Grant an allowed role to a user")
+		.setName("revoke")
+		.setDescription("Remove a granted role from a user")
 		.addUserOption((option) =>
 			option
 				.setName("user")
-				.setDescription("Remove a granted role from a user")
+				.setDescription("User to remove the role from")
 				.setRequired(true)
 		)
 		.addRoleOption((option) =>
