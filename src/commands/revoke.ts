@@ -1,6 +1,6 @@
 import { db } from "../db/db.ts";
 import type { Command } from "./index.ts";
-import { GuildMemberRoleManager, MessageFlags, SlashCommandBuilder } from "discord.js";
+import { GuildMemberRoleManager, InteractionContextType, MessageFlags, SlashCommandBuilder } from "discord.js";
 
 export default {
 	data: new SlashCommandBuilder()
@@ -14,7 +14,9 @@ export default {
 		)
 		.addRoleOption((option) =>
 			option.setName("role").setDescription("Role to remove").setRequired(true)
-		),
+		)
+		.setContexts(InteractionContextType.Guild),
+
 	async execute(interaction) {
 		const user = interaction.options.getUser("user");
 		if (!user) return;
