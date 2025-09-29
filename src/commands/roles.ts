@@ -1,4 +1,8 @@
-import { InteractionContextType, MessageFlags, SlashCommandBuilder } from "discord.js";
+import {
+	InteractionContextType,
+	MessageFlags,
+	SlashCommandBuilder,
+} from "discord.js";
 import { db } from "../db/db.ts";
 import type { Command } from "./index.ts";
 
@@ -15,7 +19,7 @@ export default {
 
 		return interaction.reply({
 			content: `Allowed roles:\n${list}`,
-			flags: [MessageFlags.Ephemeral]
+			flags: [MessageFlags.Ephemeral],
 		});
 	},
 } as Command;

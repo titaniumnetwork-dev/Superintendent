@@ -20,7 +20,7 @@
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
-        "esModuleInterop": true,
+		"esModuleInterop": true
 	},
 	"include": ["src"]
 }

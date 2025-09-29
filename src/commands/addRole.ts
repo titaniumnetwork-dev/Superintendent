@@ -10,7 +10,7 @@ export default {
 			opt.setName("role").setDescription("Role to allow").setRequired(true)
 		)
 		.setContexts(InteractionContextType.Guild),
-		
+
 	async execute(interaction) {
 		const role = interaction.options.getRole("role", true);
 		db.allowed_roles.push(role.id);

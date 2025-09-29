@@ -1,15 +1,15 @@
-import fs from "node:fs"
+import fs from "node:fs";
 interface DB {
 	allowed_roles: string[];
 }
 
 export function loadDB(): DB {
-    try {
-        const raw = fs.readFileSync(process.env.DB_FILE, "utf8");
-        return JSON.parse(raw);
-    } catch {
-        return { allowed_roles: [] };
-    }
+	try {
+		const raw = fs.readFileSync(process.env.DB_FILE, "utf8");
+		return JSON.parse(raw);
+	} catch {
+		return { allowed_roles: [] };
+	}
 }
 
 export function saveDB() {
