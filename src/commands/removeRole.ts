@@ -1,5 +1,5 @@
 import { InteractionContextType, SlashCommandBuilder } from "discord.js";
-import type { Command } from ".";
+import type { Command } from "./index.ts";
 import { db, saveDB } from "../db/db";
 
 export default {
@@ -15,7 +15,7 @@ export default {
 		const role = interaction.options.getRole("role", true);
 		db.allowed_roles = db.allowed_roles.filter((id) => id !== role.id);
 		saveDB();
-		return interaction.reply({
+		await interaction.reply({
 			content: `Removed <@&${role.id}> from allowed roles.`,
 		});
 	},

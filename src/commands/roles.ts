@@ -17,9 +17,9 @@ export default {
 			db.allowed_roles.map((r) => `<@&${r}>`).join("\n") ||
 			"**No roles configured**";
 
-		return interaction.reply({
+		await interaction.reply({
 			content: `Allowed roles:\n${list}`,
 			flags: [MessageFlags.Ephemeral],
 		});
-	},
+	}
 } as Command;

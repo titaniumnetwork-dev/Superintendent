@@ -1,11 +1,13 @@
-import { db } from "../db/db.ts";
-import type { Command } from "./index.ts";
+
 import {
-	GuildMemberRoleManager,
+	type GuildMemberRoleManager,
 	InteractionContextType,
 	MessageFlags,
 	SlashCommandBuilder,
 } from "discord.js";
+
+import { db } from "../db/db.ts";
+import type { Command } from "./index.ts";
 
 export default {
 	data: new SlashCommandBuilder()
@@ -36,7 +38,7 @@ export default {
 		}
 		await (member.roles as GuildMemberRoleManager).add(role.id);
 
-		return interaction.reply({
+		await interaction.reply({
 			content: `Granted <@&${role.id}> to <@!${user.id}>.`,
 		});
 	},
