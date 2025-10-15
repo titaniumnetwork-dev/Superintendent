@@ -50,7 +50,7 @@ export default {
 
 		const embed = new EmbedBuilder()
 			.setTitle("Uptime")
-			.setDescription(`ProxyGuard has been running for: \`${uptimeString}\``);
+			.setDescription(`Superintendent has been running for: \`${uptimeString}\``);
 
 		await interaction.reply({ embeds: [embed], ephemeral });
 	},
