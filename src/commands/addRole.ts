@@ -6,9 +6,7 @@ export default {
 	data: new SlashCommandBuilder()
 		.setName("addrole")
 		.setDescription("Allow a role to be grantable")
-		.addRoleOption((opt) =>
-			opt.setName("role").setDescription("Role to allow").setRequired(true)
-		)
+		.addRoleOption((opt) => opt.setName("role").setDescription("Role to allow").setRequired(true))
 		.setContexts(InteractionContextType.Guild),
 
 	async execute(interaction) {

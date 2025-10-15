@@ -1,8 +1,4 @@
-import {
-	InteractionContextType,
-	MessageFlags,
-	SlashCommandBuilder,
-} from "discord.js";
+import { InteractionContextType, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { db } from "../db/db.ts";
 import type { Command } from "./index.ts";
 
@@ -13,13 +9,11 @@ export default {
 		.setContexts(InteractionContextType.Guild),
 
 	async execute(interaction) {
-		const list =
-			db.allowed_roles.map((r) => `<@&${r}>`).join("\n") ||
-			"**No roles configured**";
+		const list = db.allowed_roles.map((r) => `<@&${r}>`).join("\n") || "**No roles configured**";
 
 		await interaction.reply({
 			content: `Allowed roles:\n${list}`,
 			flags: [MessageFlags.Ephemeral],
 		});
-	}
+	},
 } as Command;

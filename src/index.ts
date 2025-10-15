@@ -1,6 +1,5 @@
 import { Client, GatewayIntentBits } from "discord.js";
 
-
 import { loadCommands, loadEvents } from "./util/loaders.ts";
 import { registerEvents } from "./util/registerEvents.ts";
 import { registerCommands } from "./util/deploy.ts";

@@ -1,4 +1,3 @@
-
 import {
 	type GuildMemberRoleManager,
 	InteractionContextType,
@@ -14,10 +13,7 @@ export default {
 		.setName("grant")
 		.setDescription("Grant an allowed role to a user")
 		.addUserOption((option) =>
-			option
-				.setName("user")
-				.setDescription("User to grant the role")
-				.setRequired(true)
+			option.setName("user").setDescription("User to grant the role").setRequired(true)
 		)
 		.addRoleOption((option) =>
 			option.setName("role").setDescription("Role to grant").setRequired(true)

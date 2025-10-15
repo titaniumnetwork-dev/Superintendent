@@ -8,16 +8,12 @@ import {
 import { db } from "../db/db.ts";
 import type { Command } from "./index.ts";
 
-
 export default {
 	data: new SlashCommandBuilder()
 		.setName("revoke")
 		.setDescription("Remove a granted role from a user")
 		.addUserOption((option) =>
-			option
-				.setName("user")
-				.setDescription("User to remove the role from")
-				.setRequired(true)
+			option.setName("user").setDescription("User to remove the role from").setRequired(true)
 		)
 		.addRoleOption((option) =>
 			option.setName("role").setDescription("Role to remove").setRequired(true)
