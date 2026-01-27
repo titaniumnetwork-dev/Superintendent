@@ -1,19 +1,17 @@
-import { InteractionContextType, MessageFlags, SlashCommandBuilder } from "discord.js";
-import { db } from "../db/db.ts";
-import type { Command } from "./index.ts";
-
-export default {
-	data: new SlashCommandBuilder()
-		.setName("roles")
-		.setDescription("List all allowed roles")
-		.setContexts(InteractionContextType.Guild),
-
-	async execute(interaction) {
+import { Declare, Command, type CommandContext } from "seyfert";
+import { MessageFlags } from "seyfert/lib/types";
+import db from "@/db";
+@Declare({
+  name: "roles",
+  description: "List all allowed roles."
+})
+export default class RolesCommand extends Command  {
+	async execute(ctx: CommandContext) {
 		const list = db.allowed_roles.map((r) => `<@&${r}>`).join("\n") || "**No roles configured**";
 
-		await interaction.reply({
+		await ctx.editOrReply({
 			content: `Allowed roles:\n${list}`,
-			flags: [MessageFlags.Ephemeral],
+			flags: MessageFlags.Ephemeral,
 		});
-	},
-} as Command;
+	}
+}

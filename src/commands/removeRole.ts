@@ -1,22 +1,25 @@
-import { InteractionContextType, SlashCommandBuilder } from "discord.js";
-import type { Command } from "./index.ts";
-import { db, saveDB } from "../db/db";
+import { Declare, Options, Command, type CommandContext } from "seyfert";
+import { createRoleOption } from "seyfert";
+import db, { saveDB } from "@/db";
 
-export default {
-	data: new SlashCommandBuilder()
-		.setName("removerole")
-		.setDescription("Disallow a role from being granted")
-		.addRoleOption((opt) =>
-			opt.setName("role").setDescription("Role to disallow").setRequired(true)
-		)
-		.setContexts(InteractionContextType.Guild),
-
-	async execute(interaction) {
-		const role = interaction.options.getRole("role", true);
+const options = {
+	role: createRoleOption({
+		description: "Role to disallow",
+		required: true,
+	}),
+}
+@Declare({
+  name: "removerole",
+  description: "Disallow a role from being granted."
+})
+@Options(options)
+export default class RemoveRoleCommand extends Command {
+	async run(ctx: CommandContext<typeof options>) {
+		const role = ctx.options.role;
 		db.allowed_roles = db.allowed_roles.filter((id) => id !== role.id);
 		saveDB();
-		await interaction.reply({
+		await ctx.editOrReply({
 			content: `Removed <@&${role.id}> from allowed roles.`,
 		});
-	},
-} as Command;
+	}
+};

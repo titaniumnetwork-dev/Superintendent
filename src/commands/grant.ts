@@ -1,41 +1,45 @@
-import {
-	type GuildMemberRoleManager,
-	InteractionContextType,
-	MessageFlags,
-	SlashCommandBuilder,
-} from "discord.js";
+import { Declare, Options, Command, type CommandContext } from "seyfert";
+import { createUserOption, createRoleOption } from "seyfert";
+import db from "@/db";
+import { MessageFlags } from "seyfert/lib/types";
 
-import { db } from "../db/db.ts";
-import type { Command } from "./index.ts";
+const options = {
+	user: createUserOption({
+		description: "User to grant the role to",
+		required: true,
+	}),
+	role: createRoleOption({
+		description: "Role to grant",
+		required: true,
+	}),
+}
 
-export default {
-	data: new SlashCommandBuilder()
-		.setName("grant")
-		.setDescription("Grant an allowed role to a user")
-		.addUserOption((option) =>
-			option.setName("user").setDescription("User to grant the role").setRequired(true)
-		)
-		.addRoleOption((option) =>
-			option.setName("role").setDescription("Role to grant").setRequired(true)
-		)
-		.setContexts(InteractionContextType.Guild),
-
-	async execute(interaction) {
-		const user = interaction.options.getUser("user");
-		if (!user) return;
-		const member = interaction.options.getMember("user");
-		if (!member) return;
-		const role = interaction.options.getRole("role", true);
+@Declare({
+  name: "grant",
+  description: "Grant an allowed role to a user."
+})
+@Options(options)
+export default class GrantCommand extends Command {
+	async run(ctx: CommandContext<typeof options>) {
+		const guild = await ctx.guild();
+		if (!guild) {
+			return ctx.editOrReply({
+				content: "This command can only be used in a guild.",
+				flags: MessageFlags.Ephemeral,
+			});
+		};
+		const user = ctx.options.user;
+		const role = ctx.options.role;
 		if (!db.allowed_roles.includes(role.id)) {
-			return interaction.reply({
-				content: "Role not allowed",
-				flags: [MessageFlags.Ephemeral],
+			return ctx.editOrReply({
+				content: "Role not allowed.",
+				flags: MessageFlags.Ephemeral,
 			});
 		}
-		await (member.roles as GuildMemberRoleManager).add(role.id);
+		await guild.members.addRole(user.id, role.id);
 
-		await interaction.reply({
+		await ctx.editOrReply({
 			content: `Granted <@&${role.id}> to <@!${user.id}>.`,
 		});
-	},
-} as Command;
+	}
+};

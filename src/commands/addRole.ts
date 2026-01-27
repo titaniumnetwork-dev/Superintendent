@@ -1,20 +1,25 @@
-import { InteractionContextType, SlashCommandBuilder } from "discord.js";
-import type { Command } from "./index.ts";
-import { db, saveDB } from "../db/db";
+import { Declare, Options, Command, type CommandContext } from "seyfert";
+import { createRoleOption } from "seyfert";
+import db, { saveDB } from "@/db";
 
-export default {
-	data: new SlashCommandBuilder()
-		.setName("addrole")
-		.setDescription("Allow a role to be grantable")
-		.addRoleOption((opt) => opt.setName("role").setDescription("Role to allow").setRequired(true))
-		.setContexts(InteractionContextType.Guild),
-
-	async execute(interaction) {
-		const role = interaction.options.getRole("role", true);
+const options = {
+	role: createRoleOption({
+		description: "Role to allow",
+		required: true,
+	}),
+};
+@Declare({
+	name: "addrole",
+  	description: "Allow a role to be granted."
+})
+@Options(options)
+export default class AddRoleCommand extends Command {
+	async run(ctx: CommandContext<typeof options>) {
+		const role = ctx.options.role;
 		db.allowed_roles.push(role.id);
 		saveDB();
-		await interaction.reply({
+		await ctx.editOrReply({
 			content: `Added <@&${role.id}> to allowed roles.`,
 		});
-	},
-} as Command;
+	}
+};

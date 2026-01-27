@@ -2,38 +2,25 @@
  * @fileoverview Slash command for displaying bot uptime information.
  */
 
-import {
-	ApplicationIntegrationType,
-	EmbedBuilder,
-	InteractionContextType,
-	SlashCommandBuilder,
-} from "discord.js";
-import type { ILogObj, Logger } from "tslog";
+import { Declare, Options, Command, type CommandContext} from "seyfert";
+import { Embed } from "seyfert";
+import { createBooleanOption } from "seyfert";
+import { MessageFlags } from 'seyfert/lib/types';
 
-import type { Command } from "./index.ts";
+const options = {
+	ephemeral: createBooleanOption({
+    	description: "Hide the command's response",
+  	}),
+}
 
-/** Slash command for displaying bot uptime information. */
-export default {
-	data: new SlashCommandBuilder()
-		.setName("uptime")
-		.setDescription("Display bot uptime.")
-		.setIntegrationTypes(
-			ApplicationIntegrationType.GuildInstall,
-			ApplicationIntegrationType.UserInstall
-		)
-		.setContexts(
-			InteractionContextType.Guild,
-			InteractionContextType.BotDM,
-			InteractionContextType.PrivateChannel
-		),
-
-	/**
-	 * Executes the uptime command.
-	 * @param interaction Discord slash command interaction.
-	 * @param logger A sublogger.
-	 */
-	async execute(interaction, logger: Logger<ILogObj>) {
-		const ephemeral = interaction.options.getBoolean("ephemeral") ?? false;
+@Declare({
+  name: "uptime",
+  description: "Display bot uptime."
+})
+@Options(options)
+export default class UptimeCommand extends Command {
+	async run(ctx: CommandContext<typeof options>) {
+ 		const flags = ctx.options.ephemeral ? MessageFlags.Ephemeral : undefined;
 
 		const uptimeSeconds = Math.floor(process.uptime());
 
@@ -46,12 +33,12 @@ export default {
 			seconds: uptimeSeconds % 60,
 		});
 
-		logger.debug("Giving the user the uptime of:", uptimeString);
+		ctx.client.logger.debug("Giving the user the uptime of:", uptimeString);
 
-		const embed = new EmbedBuilder()
+		const embed = new Embed()
 			.setTitle("Uptime")
 			.setDescription(`Superintendent has been running for: \`${uptimeString}\``);
 
-		await interaction.reply({ embeds: [embed], ephemeral });
-	},
-} as Command;
+		await ctx.editOrReply({ embeds: [embed], flags });
+	}
+};

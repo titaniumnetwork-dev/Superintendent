@@ -1,4 +1,5 @@
 import fs from "node:fs";
+
 interface DB {
 	allowed_roles: string[];
 }
@@ -16,4 +17,6 @@ export function saveDB() {
 	Bun.write(process.env.DB_FILE, JSON.stringify(db, null, 2));
 }
 
-export const db = loadDB();
+const db = loadDB();
+
+export default db;

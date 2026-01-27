@@ -1,14 +1,11 @@
-import { Events } from "discord.js";
+import { createEvent } from "seyfert";
 
-import type { Event } from "../events/index.ts";
-import { createSubLogger } from "../logger.ts";
-
-export default {
-	name: Events.ClientReady,
-	once: true,
-	async execute(client, logger) {
-		const evLogger = createSubLogger(logger, "Ready");
-
-		evLogger.info(`Logged in as ${client.user.tag} (ID: ${client.user.id})`);
+export default createEvent({	
+	data: {
+		name: "botReady",
+		once: true,
 	},
-} as Event<Events.ClientReady>;
+	async run(user, client) {
+		client.logger.info(`Logged in as ${user.tag} (ID: ${user.id})`);
+	},
+});

@@ -12,6 +12,11 @@
 		"verbatimModuleSyntax": true,
 		"moduleDetection": "force",
 		"noEmit": true,
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
 
 		/* Linting */
 		"strict": true,
