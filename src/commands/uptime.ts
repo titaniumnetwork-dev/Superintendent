@@ -15,7 +15,8 @@ const options = {
 
 @Declare({
   name: "uptime",
-  description: "Display bot uptime."
+  description: "Display bot uptime.",
+  contexts: ["BotDM", "Guild", "PrivateChannel"]
 })
 @Options(options)
 export default class UptimeCommand extends Command {

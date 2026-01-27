@@ -10,7 +10,8 @@ const options = {
 }
 @Declare({
   name: "removerole",
-  description: "Disallow a role from being granted."
+  description: "Disallow a role from being granted.",
+  contexts: ["Guild"]
 })
 @Options(options)
 export default class RemoveRoleCommand extends Command {

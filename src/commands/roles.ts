@@ -3,7 +3,8 @@ import { MessageFlags } from "seyfert/lib/types";
 import db from "@/db";
 @Declare({
   name: "roles",
-  description: "List all allowed roles."
+  description: "List all allowed roles.",
+  contexts: ["Guild"]
 })
 export default class RolesCommand extends Command  {
 	async run(ctx: CommandContext) {

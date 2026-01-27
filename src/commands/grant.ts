@@ -16,7 +16,8 @@ const options = {
 
 @Declare({
   name: "grant",
-  description: "Grant an allowed role to a user."
+  description: "Grant an allowed role to a user.",
+  contexts: ["Guild"]
 })
 @Options(options)
 export default class GrantCommand extends Command {

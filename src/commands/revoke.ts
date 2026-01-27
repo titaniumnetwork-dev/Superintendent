@@ -16,7 +16,8 @@ const options = {
 
 @Declare({
   name: "revoke",
-  description: "Remove a granted role from a user."
+  description: "Remove a granted role from a user.",
+  contexts: ["Guild"]
 })
 @Options(options)
 export default class RevokeCommand extends Command {
