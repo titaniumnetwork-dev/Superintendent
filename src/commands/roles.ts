@@ -6,7 +6,7 @@ import db from "@/db";
   description: "List all allowed roles."
 })
 export default class RolesCommand extends Command  {
-	async execute(ctx: CommandContext) {
+	async run(ctx: CommandContext) {
 		const list = db.allowed_roles.map((r) => `<@&${r}>`).join("\n") || "**No roles configured**";
 
 		await ctx.editOrReply({
