@@ -1,5 +1,4 @@
-import { Declare, Options, Command, type CommandContext } from "seyfert";
-import { createRoleOption } from "seyfert";
+import { type CommandContext, createRoleOption, Declare, Options, SubCommand } from "seyfert";
 import db, { saveDB } from "@/db";
 
 const options = {
@@ -7,14 +6,14 @@ const options = {
 		description: "Role to disallow",
 		required: true,
 	}),
-}
+};
 @Declare({
-  name: "removerole",
-  description: "Disallow a role from being granted.",
-  contexts: ["Guild"]
+	name: "disallow",
+	description: "Disallow a role from being granted.",
+	contexts: ["Guild"],
 })
 @Options(options)
-export default class RemoveRoleCommand extends Command {
+export default class DisallowCommand extends SubCommand {
 	async run(ctx: CommandContext<typeof options>) {
 		const role = ctx.options.role;
 		db.allowed_roles = db.allowed_roles.filter((id) => id !== role.id);
@@ -23,4 +22,4 @@ export default class RemoveRoleCommand extends Command {
 			content: `Removed <@&${role.id}> from allowed roles.`,
 		});
 	}
-};
+}

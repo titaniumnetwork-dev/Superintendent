@@ -1,26 +1,25 @@
-import { Declare, Options, Command, type CommandContext } from "seyfert";
-import { createUserOption, createRoleOption } from "seyfert";
+import db from "@db";
+import { type CommandContext, createRoleOption, createUserOption, Declare, Options, SubCommand } from "seyfert";
 import { MessageFlags } from "seyfert/lib/types";
-import db from "@/db";
 
 const options = {
 	user: createUserOption({
-		description: "User to remove the role from",
+		description: "User to revoke the role from",
 		required: true,
 	}),
 	role: createRoleOption({
-		description: "Role to remove",
+		description: "Role to revoke",
 		required: true,
 	}),
 }
 
 @Declare({
-  name: "revoke",
-  description: "Remove a granted role from a user.",
-  contexts: ["Guild"]
+	name: "revoke",
+	description: "Revoke a granted role from a user.",
+	contexts: ["Guild"]
 })
 @Options(options)
-export default class RevokeCommand extends Command {
+export default class RevokeCommand extends SubCommand {
 	async run(ctx: CommandContext<typeof options>) {
 		const guild = await ctx.guild();
 		if (!guild) {
