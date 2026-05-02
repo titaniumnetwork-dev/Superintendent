@@ -1,5 +1,4 @@
-import { Declare, Options, Command, type CommandContext } from "seyfert";
-import { createRoleOption } from "seyfert";
+import { type CommandContext, createRoleOption, Declare, Options, SubCommand } from "seyfert";
 import db, { saveDB } from "@/db";
 
 const options = {
@@ -9,12 +8,12 @@ const options = {
 	}),
 };
 @Declare({
-	name: "addrole",
-  	description: "Allow a role to be granted.",
-	contexts: ["Guild"]
+	name: "allow",
+	description: "Allow a role to be granted.",
+	contexts: ["Guild"],
 })
 @Options(options)
-export default class AddRoleCommand extends Command {
+export default class AllowCommand extends SubCommand {
 	async run(ctx: CommandContext<typeof options>) {
 		const role = ctx.options.role;
 		db.allowed_roles.push(role.id);
@@ -23,4 +22,4 @@ export default class AddRoleCommand extends Command {
 			content: `Added <@&${role.id}> to allowed roles.`,
 		});
 	}
-};
+}

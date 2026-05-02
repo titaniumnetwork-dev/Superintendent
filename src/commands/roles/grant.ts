@@ -1,7 +1,13 @@
-import { Declare, Options, Command, type CommandContext } from "seyfert";
-import { createUserOption, createRoleOption } from "seyfert";
-import db from "@/db";
+import {
+	type CommandContext,
+	createRoleOption,
+	createUserOption,
+	Declare,
+	Options,
+	SubCommand,
+} from "seyfert";
 import { MessageFlags } from "seyfert/lib/types";
+import db from "@/db";
 
 const options = {
 	user: createUserOption({
@@ -12,15 +18,15 @@ const options = {
 		description: "Role to grant",
 		required: true,
 	}),
-}
+};
 
 @Declare({
-  name: "grant",
-  description: "Grant an allowed role to a user.",
-  contexts: ["Guild"]
+	name: "grant",
+	description: "Grant an allowed role to a user.",
+	contexts: ["Guild"],
 })
 @Options(options)
-export default class GrantCommand extends Command {
+export default class GrantCommand extends SubCommand {
 	async run(ctx: CommandContext<typeof options>) {
 		const guild = await ctx.guild();
 		if (!guild) {
@@ -28,7 +34,7 @@ export default class GrantCommand extends Command {
 				content: "This command can only be used in a guild.",
 				flags: MessageFlags.Ephemeral,
 			});
-		};
+		}
 		const user = ctx.options.user;
 		const role = ctx.options.role;
 		if (!db.allowed_roles.includes(role.id)) {
@@ -43,4 +49,4 @@ export default class GrantCommand extends Command {
 			content: `Granted <@&${role.id}> to <@!${user.id}>.`,
 		});
 	}
-};
+}

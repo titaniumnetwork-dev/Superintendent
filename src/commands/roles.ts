@@ -1,18 +1,13 @@
-import { Declare, Command, type CommandContext } from "seyfert";
-import { MessageFlags } from "seyfert/lib/types";
-import db from "@/db";
-@Declare({
-  name: "roles",
-  description: "List all allowed roles.",
-  contexts: ["Guild"]
-})
-export default class RolesCommand extends Command  {
-	async run(ctx: CommandContext) {
-		const list = db.allowed_roles.map((r) => `<@&${r}>`).join("\n") || "**No roles configured**";
+import { Command, Declare, Options } from "seyfert";
+import AllowCommand from "./roles/allow";
+import DisallowCommand from "./roles/disallow";
+import GrantCommand from "./roles/grant";
+import ListCommand from "./roles/list";
+import RevokeCommand from "./roles/revoke";
 
-		await ctx.editOrReply({
-			content: `Allowed roles:\n${list}`,
-			flags: MessageFlags.Ephemeral,
-		});
-	}
-}
+@Declare({
+	name: "roles",
+	description: "roles command"
+})
+@Options([AllowCommand, DisallowCommand, GrantCommand, RevokeCommand, ListCommand])
+export default class RolesCommand extends Command { }
