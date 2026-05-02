@@ -4,8 +4,8 @@ import ClearDeletedCommand from "./admin/clear-deleted";
 import DisallowCommand from "./admin/disallow";
 
 @Declare({
-	name: "roles",
-	description: "roles command"
+	name: "admin",
+	description: "admin command"
 })
 @Options([AllowCommand, DisallowCommand, ClearDeletedCommand])
-export default class RolesCommand extends Command { }
+export default class AdminCommand extends Command { }
