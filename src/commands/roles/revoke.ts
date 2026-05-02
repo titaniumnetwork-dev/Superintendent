@@ -1,4 +1,4 @@
-import db from "@db";
+import db from "@/db";
 import { type CommandContext, createRoleOption, createUserOption, Declare, Options, SubCommand } from "seyfert";
 import { MessageFlags } from "seyfert/lib/types";
 
