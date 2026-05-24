@@ -1,14 +1,13 @@
-FROM oven/bun:alpine
+FROM node:24-alpine
 
 WORKDIR /app
 
-RUN apk add build-base curl wget
+RUN corepack enable
 
-COPY package.json /app/package.json
-COPY bun.lock /app/bun.lock
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-RUN bun install
+RUN pnpm install --frozen-lockfile
 
 COPY . /app
 
-CMD ["bun", "run", "start"]
+CMD ["pnpm", "run", "start"]
