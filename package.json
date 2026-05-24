@@ -1,6 +1,6 @@
 {
 	"name": "superintendent",
-	"module": "index.ts",
+	"module": "src/index.ts",
 	"type": "module",
 	"packageManager": "pnpm@11.2.2",
 	"engines": {
