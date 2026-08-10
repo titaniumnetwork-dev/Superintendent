@@ -7,5 +7,5 @@ export default config.bot({
         commands: "commands",
         events: "events",
     },
-    intents: ["Guilds", "GuildMessages", "MessageContent", "GuildMembers"],
+    intents: ["Guilds"],
 });
