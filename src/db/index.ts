@@ -14,7 +14,7 @@ export function loadDB(): DB {
 }
 
 export function saveDB() {
-	Bun.write(process.env.DB_FILE, JSON.stringify(db, null, 2));
+	fs.writeFileSync(process.env.DB_FILE, JSON.stringify(db, null, 2));
 }
 
 const db = loadDB();
