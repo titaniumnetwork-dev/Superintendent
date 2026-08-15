@@ -1,7 +1,4 @@
 import type { ParseClient, Client } from "seyfert";
-declare module 'seyfert' {
-    interface UsingClient extends ParseClient<Client<true>> { }
-}
 
 declare global {
 	namespace NodeJS {
@@ -50,6 +47,10 @@ declare global {
 		/** Duration format constructor. */
 		const DurationFormat: DurationFormatConstructor;
 	}
+}
+
+declare module 'seyfert' {
+    interface UsingClient extends ParseClient<Client<true>> { }
 }
 
 export {};
